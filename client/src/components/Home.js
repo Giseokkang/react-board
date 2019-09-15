@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BoardItem from "./BoardItem";
-import { useState } from "../reducer";
 import uuid from "uuid";
+import { getPosts } from "../api";
 
 const Container = styled.div`
   width: 100%;
@@ -48,7 +48,23 @@ const Time = styled.span`
 `;
 
 const Home = () => {
-  const state = useState();
+  const [state, setState] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getBoard = async () => {
+    try {
+      const { data } = await getPosts();
+      setState(data);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getBoard();
+  }, []);
+
   return (
     <Container>
       <ItemContainer>
@@ -58,11 +74,15 @@ const Home = () => {
           <Author>작성자</Author>
           <Time>작성 시간</Time>
         </Classification>
-        {state &&
+        {loading ? (
+          <span>loading...</span>
+        ) : (
+          state &&
           state.length > 0 &&
           state.map((item, index) => (
             <BoardItem key={uuid()} item={item} index={index}></BoardItem>
-          ))}
+          ))
+        )}
       </ItemContainer>
     </Container>
   );

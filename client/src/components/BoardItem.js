@@ -28,13 +28,15 @@ const Time = styled.span`
   font-size: 15px;
 `;
 
-export default ({ item, index }) => (
-  <Container>
-    <Num>{index + 1}</Num>
-    <Title>
-      <Link to={`/board/${item.id}`}>{item.title}</Link>
-    </Title>
-    <Author>{item.author}</Author>
-    <Time>{item.time}</Time>
-  </Container>
-);
+export default ({ item, index }) => {
+  return (
+    <Container>
+      <Num>{index + 1}</Num>
+      <Title>
+        <Link to={`/board/${item._id}`}>{item.title}</Link>
+      </Title>
+      <Author>{item.author}</Author>
+      <Time>{item.createAt.slice(11, 16)}</Time>
+    </Container>
+  );
+};

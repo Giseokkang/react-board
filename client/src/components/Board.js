@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch } from "../reducer";
-import { CREATE } from "../actions";
-import uuid from "uuid";
+import { upload } from "../api";
 
 const Container = styled.div`
   width: 100vw;
@@ -37,25 +35,20 @@ const SubmitBtn = styled.button`
   margin-top: 50px;
 `;
 
-const Board = ({ history: { push } }) => {
+const Board = ({ history }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [author, setAuthor] = useState("");
-  const dispatch = useDispatch();
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    dispatch({
-      type: CREATE,
-      payLoad: {
-        id: uuid(),
-        title,
-        desc,
-        author,
-        time: `${new Date().getHours()} : ${new Date().getMinutes()}`
-      }
-    });
-    push("/");
+    const data = { title, desc, author };
+    try {
+      await upload({ ...data });
+    } catch (e) {
+      console.log(e);
+    }
+    history.push("/");
   };
 
   const onChange = e => {
