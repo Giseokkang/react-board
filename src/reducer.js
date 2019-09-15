@@ -1,12 +1,15 @@
 import React, { useReducer, createContext, useContext } from "react";
 import items from "./db";
-import { CREATE } from "./actions";
+import { CREATE, DELETE } from "./actions";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case CREATE:
-      console.log([...state, { ...action.payLoad }]);
       return [...state, { ...action.payLoad }];
+    case DELETE:
+      const deletedState = state.filter(item => item.id !== action.payLoad);
+      console.log(deletedState);
+      return [...deletedState];
     default:
       return;
   }

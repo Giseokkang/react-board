@@ -8,6 +8,7 @@ import {
 import Board from "./components/Board";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import BoardDetail from "./components/BoardDetail";
 
 export default () => (
   <Router>
@@ -16,6 +17,7 @@ export default () => (
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/board" exact component={Board} />
+        <Route path="/board/:id" component={BoardDetail} />
       </Switch>
     </>
   </Router>

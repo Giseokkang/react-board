@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 80%;
@@ -27,10 +28,12 @@ const Time = styled.span`
   font-size: 15px;
 `;
 
-export default ({ item }) => (
+export default ({ item, index }) => (
   <Container>
-    <Num>{item.id}</Num>
-    <Title>{item.title}</Title>
+    <Num>{index + 1}</Num>
+    <Title>
+      <Link to={`/board/${item.id}`}>{item.title}</Link>
+    </Title>
     <Author>{item.author}</Author>
     <Time>{item.time}</Time>
   </Container>

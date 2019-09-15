@@ -60,7 +60,9 @@ const Home = () => {
         </Classification>
         {state &&
           state.length > 0 &&
-          state.map(item => <BoardItem key={uuid()} item={item}></BoardItem>)}
+          state.map((item, index) => (
+            <BoardItem key={uuid()} item={item} index={index}></BoardItem>
+          ))}
       </ItemContainer>
     </Container>
   );

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "../reducer";
 import { CREATE } from "../actions";
@@ -36,7 +37,7 @@ const SubmitBtn = styled.button`
   margin-top: 50px;
 `;
 
-const Board = () => {
+const Board = ({ history: { push } }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [author, setAuthor] = useState("");
@@ -46,8 +47,15 @@ const Board = () => {
     e.preventDefault();
     dispatch({
       type: CREATE,
-      payLoad: { id: uuid(), title, desc, author }
+      payLoad: {
+        id: uuid(),
+        title,
+        desc,
+        author,
+        time: `${new Date().getHours()} : ${new Date().getMinutes()}`
+      }
     });
+    push("/");
   };
 
   const onChange = e => {
@@ -91,4 +99,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default withRouter(Board);
